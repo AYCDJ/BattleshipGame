@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>BattleshipGame.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BattleshipGame.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">BattleshipGame {</span>
+    <span class="s0">private </span><span class="s1">Player player1</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Player player2</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Scanner scanner</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">BattleshipGame() {</span>
+        <span class="s1">player1 = </span><span class="s0">new </span><span class="s1">Player()</span><span class="s0">;</span>
+        <span class="s1">player2 = </span><span class="s0">new </span><span class="s1">Player()</span><span class="s0">;</span>
+        <span class="s1">scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">startGame() {</span>
+        <span class="s1">System.out.println(</span><span class="s2">&quot;Player 1, place your ships.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">setupShips(player1)</span><span class="s0">;</span>
+        <span class="s1">System.out.println(</span><span class="s2">&quot;Player 2, place your ships.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">setupShips(player2)</span><span class="s0">;</span>
+
+        <span class="s0">boolean </span><span class="s1">gameOver = </span><span class="s0">false;</span>
+        <span class="s1">Player currentPlayer = player1</span><span class="s0">;</span>
+        <span class="s1">Player opponent = player2</span><span class="s0">;</span>
+
+        <span class="s0">while </span><span class="s1">(!gameOver) {</span>
+            <span class="s1">System.out.println(</span><span class="s2">&quot;Current Player's turn:&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">currentPlayer.getBoard().displayBoard()</span><span class="s0">;</span>
+            <span class="s1">System.out.print(</span><span class="s2">&quot;Enter attack coordinates (x y): &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">x = scanner.nextInt()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">y = scanner.nextInt()</span><span class="s0">;</span>
+
+            <span class="s1">String result = currentPlayer.attack(opponent</span><span class="s0">, </span><span class="s1">x</span><span class="s0">, </span><span class="s1">y)</span><span class="s0">;</span>
+            <span class="s1">System.out.println(result)</span><span class="s0">;</span>
+
+            <span class="s3">// Swap turns</span>
+            <span class="s1">Player temp = currentPlayer</span><span class="s0">;</span>
+            <span class="s1">currentPlayer = opponent</span><span class="s0">;</span>
+            <span class="s1">opponent = temp</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setupShips(Player player) {</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s0">; </span><span class="s1">i &lt; </span><span class="s4">5</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s1">System.out.print(</span><span class="s2">&quot;Enter ship position (x y) and orientation (0 for horizontal, 1 for vertical): &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">x = scanner.nextInt()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">y = scanner.nextInt()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">orientation = scanner.nextInt()</span><span class="s0">;</span>
+
+            <span class="s0">boolean </span><span class="s1">placed = player.placeShip(x</span><span class="s0">, </span><span class="s1">y</span><span class="s0">, </span><span class="s1">i</span><span class="s0">, </span><span class="s1">orientation == </span><span class="s4">0</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(!placed) {</span>
+                <span class="s1">System.out.println(</span><span class="s2">&quot;Invalid placement. Try again.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i--</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">BattleshipGame game = </span><span class="s0">new </span><span class="s1">BattleshipGame()</span><span class="s0">;</span>
+        <span class="s1">game.startGame()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
