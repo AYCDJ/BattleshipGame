@@ -8,3 +8,7 @@ ideally uses some form of gui both when setting up and when playing
 might implement at a later date 
 
 Fill this out later \
+
+just realized accidentally hit export to html on intellij compiler 
+
+whoops
